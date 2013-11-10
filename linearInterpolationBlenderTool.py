@@ -6,7 +6,7 @@ bl_info = {
  "location": "",  
  "description": "This solution provides tools to procedurally generate meshes using Linear Interpolation.",  
  "warning": "",  
- "wiki_url": "https://github.com/MrNothing/Linear-Interpolation-Blender-Tool/wiki/How-to-use",  
+ "wiki_url": "https://github.com/MrNothing/Linear-Interpolation-Blender-Tool/wiki",  
  "tracker_url": "",  
  "category": "Object"}  
 
