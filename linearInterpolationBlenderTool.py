@@ -325,8 +325,8 @@ def applyBrush(self, brushPosition):
 		for vert in bpy.generatedMeshResult.data.vertices:
 			recalculatesVertice = [vert.co.x, vert.co.y, vert.co.z]
 			
-			print("ABS: "+str(abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)))
-			print("bpy.interpolationBrushIntensity: "+str(bpy.generatedMeshResult.interpolationBrushIntensity))
+			#print("ABS: "+str(abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)))
+			#print("bpy.interpolationBrushIntensity: "+str(bpy.generatedMeshResult.interpolationBrushIntensity))
 			
 			vertWorldPosition = meshPosition+Vector((vert.co.x, vert.co.y, vert.co.z))
 					
