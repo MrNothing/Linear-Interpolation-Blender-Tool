@@ -336,28 +336,36 @@ def applyBrush(self, brushPosition):
 			if(relativeIntensity>1):
 				relativeIntensity = 1
 			
-			if(relativeIntensity>0): #if i am in brush range
-				if(recalculatesVertice[0]>refrenceMesh.data.vertices[vert.index].co.x):
-					recalculatesVertice[0]-=abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+			try:
+			
+				if(relativeIntensity>0): #if i am in brush range
 				
-				if(recalculatesVertice[0]<refrenceMesh.data.vertices[vert.index].co.x):
-					recalculatesVertice[0]+=abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+					if(recalculatesVertice[0]>refrenceMesh.data.vertices[vert.index].co.x):
+						recalculatesVertice[0]-=abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
 					
-				if(recalculatesVertice[1]>refrenceMesh.data.vertices[vert.index].co.y):
-					recalculatesVertice[1]-=abs(recalculatesVertice[1]-refrenceMesh.data.vertices[vert.index].co.y)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
-				
-				if(recalculatesVertice[1]<refrenceMesh.data.vertices[vert.index].co.y):
-					recalculatesVertice[1]+=abs(recalculatesVertice[1]-refrenceMesh.data.vertices[vert.index].co.y)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+					if(recalculatesVertice[0]<refrenceMesh.data.vertices[vert.index].co.x):
+						recalculatesVertice[0]+=abs(recalculatesVertice[0]-refrenceMesh.data.vertices[vert.index].co.x)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+						
+					if(recalculatesVertice[1]>refrenceMesh.data.vertices[vert.index].co.y):
+						recalculatesVertice[1]-=abs(recalculatesVertice[1]-refrenceMesh.data.vertices[vert.index].co.y)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
 					
-				if(recalculatesVertice[2]>refrenceMesh.data.vertices[vert.index].co.z):
-					recalculatesVertice[2]-=abs(recalculatesVertice[2]-refrenceMesh.data.vertices[vert.index].co.z)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
-				
-				if(recalculatesVertice[2]<refrenceMesh.data.vertices[vert.index].co.z):
-					recalculatesVertice[2]+=abs(recalculatesVertice[2]-refrenceMesh.data.vertices[vert.index].co.z)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+					if(recalculatesVertice[1]<refrenceMesh.data.vertices[vert.index].co.y):
+						recalculatesVertice[1]+=abs(recalculatesVertice[1]-refrenceMesh.data.vertices[vert.index].co.y)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+						
+					if(recalculatesVertice[2]>refrenceMesh.data.vertices[vert.index].co.z):
+						recalculatesVertice[2]-=abs(recalculatesVertice[2]-refrenceMesh.data.vertices[vert.index].co.z)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+					
+					if(recalculatesVertice[2]<refrenceMesh.data.vertices[vert.index].co.z):
+						recalculatesVertice[2]+=abs(recalculatesVertice[2]-refrenceMesh.data.vertices[vert.index].co.z)*bpy.generatedMeshResult.interpolationBrushIntensity*relativeIntensity
+			
+				bm.verts[vert.index].co.x = recalculatesVertice[0]
+				bm.verts[vert.index].co.y = recalculatesVertice[1]
+				bm.verts[vert.index].co.z = recalculatesVertice[2]
+			except :
+				allowProceed -= 1
 		
-			bm.verts[vert.index].co.x = recalculatesVertice[0]
-			bm.verts[vert.index].co.y = recalculatesVertice[1]
-			bm.verts[vert.index].co.z = recalculatesVertice[2]
+		if(allowProceed <= 0):
+			self.report({'WARNING'}, str(allowProceed-1)+' vertices were not cloned! Make sure all reference Meshes share the same amount of vertices!')
 		
 		# Finish up, write the bmesh back to the mesh
 		bm.to_mesh(bpy.generatedMeshResult.data)
